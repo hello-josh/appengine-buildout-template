@@ -1,0 +1,8 @@
+.installed.cfg
+.mr.developer.cfg
+app/dist
+bin
+downloads
+eggs
+local_appserver_deps
+parts
