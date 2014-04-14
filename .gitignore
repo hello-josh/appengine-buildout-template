@@ -6,3 +6,5 @@ downloads
 eggs
 local_appserver_deps
 parts
+.idea
+db.sqlite3
