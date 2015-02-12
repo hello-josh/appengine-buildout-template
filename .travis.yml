@@ -23,6 +23,10 @@ after_success:
     [[ -n "$DEV_BRANCH" ]] && APP_ID=kapx-site-dev;
     [[ -n "$DEMO_BRANCH" ]] && APP_ID=kapx-site-demo;
     printenv;
+    wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip;
+    unzip google-cloud-sdk.zip;
+    google-cloud-sdk/install.sh --usage-reporting false --path-update false --rc-path=~/.bashrc --bash-completion false --override-components=app;
+    gcloud components update preview app;
     gcloud auth activate-service-account $GAE_CLIENT_ID --key-file deploy/buildout-template-c3f13b4450c1.json;
   fi;
 
