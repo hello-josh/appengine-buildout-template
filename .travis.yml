@@ -2,20 +2,17 @@ language: python
 python:
   - "2.7"
 
-before_install:
-  # --setuptools-version=8.3 is a hack until
-  # https://github.com/buildout/buildout/issues/237 is resolved?
-  - if [ ! -f './bin/buildout' ]; then
-  -   python bootstrap-buildout.py --setuptools-version=8.3;
-  - fi
 
+# --setuptools-version=8.3 is a hack until
+# https://github.com/buildout/buildout/issues/237 is resolved?
 install:
-  - ./bin/buildout
+  - python bootstrap-buildout.py --setuptools-version=8.3 && ./bin/buildout
 
 script:
   - ./bin/nosetests
 
 after_success:
 - echo "PR# $TRAVIS_PULL_REQUEST"
+- echo $deploy_account
 - printenv
 - set -e
