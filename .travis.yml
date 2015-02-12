@@ -15,13 +15,15 @@ install:
 script:
   - ./bin/nosetests
 
+# todo: external script this
 after_success:
 - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
     DEV_BRANCH=$(echo $TRAVIS_BRANCH | sed -n 's|^\(kapx-[0-9]\{3,\}\).*|\1|p');
     DEMO_BRANCH=$(echo $TRAVIS_BRANCH | sed -n 's|^\(release-[0-9]\{8\}\)$|\1|p');
-    APP_ID=$([[ -n "$DEV_BRANCH" ]] && echo 'kapx-site-dev' || echo 'kapx-site-demo')
+    [[ -n "$DEV_BRANCH" ]] && APP_ID=kapx-site-dev;
+    [[ -n "$DEMO_BRANCH" ]] && APP_ID=kapx-site-demo;
     printenv;
-    gcloud auth activate-service-account $GAE_CLIENT_ID --key-file deploy/buildout-template-c3f13b4450c1.json
+    gcloud auth activate-service-account $GAE_CLIENT_ID --key-file deploy/buildout-template-c3f13b4450c1.json;
   fi;
 
 env:
