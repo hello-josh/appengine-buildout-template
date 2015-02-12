@@ -4,8 +4,8 @@ python:
 
 before_install:
   - if [ ! -f './bin/buildout' ]; then
-      python bootstrap-buildout.py
-    fi
+      python bootstrap-buildout.py;
+    fi;
 
 install:
   - ./bin/buildout
