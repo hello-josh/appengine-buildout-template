@@ -22,7 +22,7 @@ def jinja2_factory(app):
     return j
 
 
-class MyTestHandler(webapp2.RequestHandler):
+class MyHandler(webapp2.RequestHandler):
     def get(self):
         renderer = jinja2.get_jinja2(
             factory=jinja2_factory,
