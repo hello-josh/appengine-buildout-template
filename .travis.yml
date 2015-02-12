@@ -4,7 +4,7 @@ python:
 
 before_install:
   - openssl aes-256-cbc -K $encrypted_2ae1a256cab0_key -iv $encrypted_2ae1a256cab0_iv
-    -in buildout-template-c3f13b4450c1.json.enc -out deploy/buildout-template-c3f13b4450c1.json
+    -in deploy/buildout-template-c3f13b4450c1.json.enc -out deploy/buildout-template-c3f13b4450c1.json
     -d
 
 # --setuptools-version=8.3 is a hack until
