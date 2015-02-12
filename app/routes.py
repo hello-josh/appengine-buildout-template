@@ -1,17 +1,17 @@
 from webapp2 import Route
-import testhandler
+import handlers
 
 _routes = [
     # add `Route` or `RedirectRoute` classes here
-    Route('/', testhandler.MyTestHandler, 'index')
+    Route('/', handlers.MyHandler, 'index')
 ]
 
 
 def get_routes():
     """Gets the app's routes
-
-    :return: List of routes
-    :rtype: list
+    Returns
+        :return: List of Route
+        :rtype: list of webapp2.Route
     """
     return _routes
 

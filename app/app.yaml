@@ -83,4 +83,4 @@ error_handlers:
     file: templates/errors/timeout.html
 
 inbound_services:
-  - warmup
+#  - warmup

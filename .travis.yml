@@ -1,0 +1,16 @@
+language: python
+python:
+  - "2.7"
+
+before_install:
+  # --setuptools-version=8.3 is a hack until
+  # https://github.com/buildout/buildout/issues/237 is resolved?
+  - if [ ! -f './bin/buildout' ]; then
+      python bootstrap-buildout.py --setuptools-version=8.3;
+    fi
+
+install:
+  - ./bin/buildout
+
+script:
+  - ./bin/nosetests
