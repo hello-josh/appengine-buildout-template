@@ -1,12 +1,13 @@
 Google App Engine + zc.buildout template
 ===========================
+[![Build Status](https://travis-ci.org/Trii/appengine-buildout-template.svg?branch=master)](https://travis-ci.org/Trii/appengine-buildout-template)
 
 Template project for using zc.buildout with Google App Engine projects
 
 ### To initialize your project
 
 ```sh
-$ python bootstrap.py
+$ python bootstrap-buildout.py
 $ ./bin/buildout
 ```
 

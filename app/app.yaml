@@ -1,28 +1,9 @@
-application: your-app-id-here
+application: buildout-template
 version: 1
 
 runtime: python27
 api_version: 1
 threadsafe: true
-
-skip_files:
-- ^(.*/)?app\.yaml
-- ^(.*/)?app\.yml
-- ^(.*/)?index\.yaml
-- ^(.*/)?index\.yml
-- ^(.*/)?#.*#
-- ^(.*/)?.*~
-- ^(.*/)?.*\.py[co]
-- ^(.*/)?.*/RCS/.*
-- ^(.*/)?\..*
-- ^(.*/)?tests$
-- ^(.*/)?test$
-- ^Makefile
-- ^COPYING.LESSER
-- ^README.rdoc
-- \.gitignore
-- ^\.git/.*
-- \.*\.lint$
 
 builtins:
 - appstats: on #/_ah/stats/
@@ -71,16 +52,3 @@ libraries:
   version: "2.5.2"
 - name: jinja2
   version: "2.6"
-
-
-error_handlers:
-  # Only errors with error_code, don't put a default error here
-  - error_code: over_quota
-    file: templates/errors/over_quota.html
-  - error_code: dos_api_denial
-    file: templates/errors/dos_api_denial.html
-  - error_code: timeout
-    file: templates/errors/timeout.html
-
-inbound_services:
-#  - warmup
