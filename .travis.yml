@@ -2,6 +2,10 @@ language: python
 python:
   - "2.7"
 
+before_install:
+  - openssl aes-256-cbc -K $encrypted_2ae1a256cab0_key -iv $encrypted_2ae1a256cab0_iv
+    -in buildout-template-c3f13b4450c1.json.enc -out deploy/buildout-template-c3f13b4450c1.json
+    -d
 
 # --setuptools-version=8.3 is a hack until
 # https://github.com/buildout/buildout/issues/237 is resolved?
@@ -13,5 +17,13 @@ script:
 
 after_success:
 - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    DEV_BRANCH=$(echo $TRAVIS_BRANCH | sed -n 's|^\(kapx-[0-9]\{3,\}\).*|\1|p');
+    DEMO_BRANCH=$(echo $TRAVIS_BRANCH | sed -n 's|^\(release-[0-9]\{8\}\)$|\1|p');
+    APP_ID=$([[ -n "$DEV_BRANCH" ]] && echo 'kapx-site-dev' || echo 'kapx-site-demo')
     printenv;
+    gcloud auth activate-service-account $GAE_CLIENT_ID --key-file deploy/buildout-template-c3f13b4450c1.json
   fi;
+
+env:
+  global:
+    - secure: "Pg4bbTfcHe5cZHZM8sTitS685eCcHmyiOvfr9MSLjyAU4c8xob9iMHE2MyD1ZjAM8iVKliSUhYrJzUU4/3Q2gx6sAUK4n16Bp5f1nFxL+qrvRv5esnnXr/tQNIuZkuX6dwQxvz9Fb7LQxsSkLDJkjwsYxRH1bcJin6rU7fcmaPc="
