@@ -2,7 +2,7 @@ language: python
 python:
   - "2.7"
 
-before_install:
+before_script:
   - if [ ! -f './bin/buildout' ]; then
       python bootstrap-buildout.py;
     fi;
