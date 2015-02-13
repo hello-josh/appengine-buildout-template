@@ -3,11 +3,17 @@
 <head>
     <title>Buildout + Google App Engine</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico" />
 </head>
 <body>
     <h1>Buildout + Google App Engine</h1>
     <hr>
     <p>Congrats, you can now start developing!</p>
+    <hr>
+    <div>
+        <a href="https://travis-ci.org/Trii/appengine-buildout-template"><img style="vertical-align: middle;" src="https://travis-ci.org/Trii/appengine-buildout-template.svg?branch={{ CURRENT_VERSION_LABEL or 'master' }}"></a>
+        View the branch <a href="https://github.com/Trii/appengine-buildout-template/tree/{{ CURRENT_VERSION_LABEL or 'master' }}">{{ CURRENT_VERSION_LABEL or 'master' }}</a> on GitHub.
+    </div>
     <script src="js/script.js"></script>
 </body>
 </html>

@@ -3,14 +3,34 @@ python:
   - "2.7"
 
 before_install:
-  # --setuptools-version=8.3 is a hack until
-  # https://github.com/buildout/buildout/issues/237 is resolved?
-  - if [ ! -f './bin/buildout' ]; then
-      python bootstrap-buildout.py --setuptools-version=8.3;
-    fi
+  - openssl aes-256-cbc -K $encrypted_2ae1a256cab0_key -iv $encrypted_2ae1a256cab0_iv
+      -in buildconf/deploy/buildout-template-c3f13b4450c1.json.enc
+      -out buildconf/deploy/buildout-template-c3f13b4450c1.json -d
+  - sudo apt-get install xsltproc
+  - mkdir build
 
+# --setuptools-version=8.3 is a hack until
+# https://github.com/buildout/buildout/issues/237 is resolved?
 install:
-  - ./bin/buildout
+  - python bootstrap-buildout.py --setuptools-version=8.3 && ./bin/buildout
 
 script:
   - ./bin/nosetests
+  - xsltproc buildconf/nosetests.xslt nosetests.xml > build/nosetests.html
+
+# todo: external script this and add coverage
+after_success:
+- set -e
+- if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
+    wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip;
+    unzip -qq google-cloud-sdk.zip;
+    google-cloud-sdk/install.sh --usage-reporting false --path-update false --rc-path=~/.bashrc --bash-completion false --override-components=app;
+    source google-cloud-sdk/path.bash.inc;
+    gcloud components update preview app;
+    gcloud auth activate-service-account $GAE_CLIENT_ID --key-file buildconf/deploy/buildout-template-c3f13b4450c1.json;
+    gcloud --project buildout-template preview app deploy --version ${TRAVIS_BRANCH} app/;
+  fi;
+
+env:
+  global:
+    - secure: "Pg4bbTfcHe5cZHZM8sTitS685eCcHmyiOvfr9MSLjyAU4c8xob9iMHE2MyD1ZjAM8iVKliSUhYrJzUU4/3Q2gx6sAUK4n16Bp5f1nFxL+qrvRv5esnnXr/tQNIuZkuX6dwQxvz9Fb7LQxsSkLDJkjwsYxRH1bcJin6rU7fcmaPc="
