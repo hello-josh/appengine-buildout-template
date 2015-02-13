@@ -1,6 +1,7 @@
 # demo handlers file
 import webapp2
 from webapp2_extras import jinja2
+import os
 
 
 def jinja2_factory(app):
@@ -12,10 +13,15 @@ def jinja2_factory(app):
     :rtype: jinja2.Jinja2
     """
     j = jinja2.Jinja2(app)
+    (version, ts) = os.environ.get('CURRENT_VERSION_ID').split('.')
+    # local dev ends up being None.\d\d\d\d\d\d\d\d\d\d\d so convert str(None) to None
+    if version == 'None':
+        version = None
     j.environment.filters.update({
     })
     j.environment.globals.update({
         'uri_for': webapp2.uri_for,
+        'CURRENT_VERSION_LABEL': version
     })
     j.environment.tests.update({
     })
