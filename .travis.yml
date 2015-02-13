@@ -15,10 +15,10 @@ install:
   - python bootstrap-buildout.py --setuptools-version=8.3 && ./bin/buildout
 
 script:
-  - ./bin/nosetests --with-coverage --cover-html --cover-inclusive --cover-html-dir=./build/coverage
+  - ./bin/nosetests
   - xsltproc buildconf/nosetests.xslt nosetests.xml > build/nosetests.html
 
-# todo: external script this
+# todo: external script this and add coverage
 after_success:
 - set -e
 - if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
