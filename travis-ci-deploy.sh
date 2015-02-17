@@ -6,7 +6,7 @@ set -e
     exit
 }
 
-if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then 
+if [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then
     source google-cloud-sdk/path.bash.inc
     gcloud components update preview app
     gcloud auth activate-service-account ${GAE_CLIENT_ID} \
