@@ -6,6 +6,11 @@ before_install:
       -in buildconf/deploy/buildout-template-c3f13b4450c1.json.enc
       -out buildconf/deploy/buildout-template-c3f13b4450c1.json -d
   - sudo apt-get install xsltproc
+  - if [[ ! -d google-cloud-sdk ]]; then
+        wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip;
+        unzip -qq google-cloud-sdk.zip;
+        google-cloud-sdk/install.sh --usage-reporting false --path-update false --rc-path=~/.bashrc --bash-completion false --override-components=app;
+    fi;
   - mkdir build
 
 install:
