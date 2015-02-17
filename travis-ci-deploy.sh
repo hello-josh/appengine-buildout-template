@@ -7,6 +7,13 @@ set -e
 }
 
 if [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then
+    wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip
+    unzip -qq google-cloud-sdk.zip
+    google-cloud-sdk/install.sh --usage-reporting false \
+                                --path-update false \
+                                --rc-path=~/.bashrc \
+                                --bash-completion false \
+                                --override-components=app
     source google-cloud-sdk/path.bash.inc
     gcloud components update preview app
     gcloud auth activate-service-account ${GAE_CLIENT_ID} \

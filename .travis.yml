@@ -9,30 +9,16 @@ before_install:
 
 install:
   - sudo apt-get install xsltproc
-  - if [[ ! -d google-cloud-sdk ]]; then
-        wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip;
-        unzip -qq google-cloud-sdk.zip;
-        google-cloud-sdk/install.sh --usage-reporting false --path-update false --rc-path=~/.bashrc --bash-completion false --override-components=app;
-    fi;
   - python bootstrap-buildout.py && ./bin/buildout
   - rm -rf parts/temp
 
 script:
   - ./bin/nosetests --with-xunit --xunit-file=$PWD/nosetests.xml
-  - xsltproc buildconf/nosetests.xslt nosetests.xml > build/nosetests.html
+  - xsltproc buildconf/nosetests.xslt $PWD/nosetests.xml > build/nosetests.html
 
-# todo: external script this and add coverage
 after_success:
 - ./travis-ci-deploy.sh
 
 env:
   global:
     - secure: "Pg4bbTfcHe5cZHZM8sTitS685eCcHmyiOvfr9MSLjyAU4c8xob9iMHE2MyD1ZjAM8iVKliSUhYrJzUU4/3Q2gx6sAUK4n16Bp5f1nFxL+qrvRv5esnnXr/tQNIuZkuX6dwQxvz9Fb7LQxsSkLDJkjwsYxRH1bcJin6rU7fcmaPc="
-
-cache:
-  directories:
-    - bin
-    - eggs
-    - downloads
-    - src
-    - google-cloud-sdk
