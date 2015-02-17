@@ -1,7 +1,7 @@
 language: python
 python:
   - "2.7"
-
+sudo: false
 before_install:
   - openssl aes-256-cbc -K $encrypted_2ae1a256cab0_key -iv $encrypted_2ae1a256cab0_iv
       -in buildconf/deploy/buildout-template-c3f13b4450c1.json.enc
@@ -9,13 +9,11 @@ before_install:
   - sudo apt-get install xsltproc
   - mkdir build
 
-# --setuptools-version=8.3 is a hack until
-# https://github.com/buildout/buildout/issues/237 is resolved?
 install:
-  - python bootstrap-buildout.py --setuptools-version=8.3 && ./bin/buildout
+  - python bootstrap-buildout.py && ./bin/buildout
 
 script:
-  - ./bin/nosetests
+  - ./bin/nosetests --with-xunit --xunit-file=$PWD/nosetests.xml
   - xsltproc buildconf/nosetests.xslt nosetests.xml > build/nosetests.html
 
 # todo: external script this and add coverage
