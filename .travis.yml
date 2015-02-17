@@ -10,6 +10,7 @@ before_install:
 
 install:
   - python bootstrap-buildout.py && ./bin/buildout
+  - rm -rf parts/temp
 
 script:
   - ./bin/nosetests --with-xunit --xunit-file=$PWD/nosetests.xml
@@ -17,17 +18,16 @@ script:
 
 # todo: external script this and add coverage
 after_success:
-- set -e
-- if [ "$TRAVIS_PULL_REQUEST" == "false" ]; then
-    wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip;
-    unzip -qq google-cloud-sdk.zip;
-    google-cloud-sdk/install.sh --usage-reporting false --path-update false --rc-path=~/.bashrc --bash-completion false --override-components=app;
-    source google-cloud-sdk/path.bash.inc;
-    gcloud components update preview app;
-    gcloud auth activate-service-account $GAE_CLIENT_ID --key-file buildconf/deploy/buildout-template-c3f13b4450c1.json;
-    gcloud --project buildout-template preview app deploy --version ${TRAVIS_BRANCH} app/;
-  fi;
+- ./travis-ci-deploy.sh
 
 env:
   global:
     - secure: "Pg4bbTfcHe5cZHZM8sTitS685eCcHmyiOvfr9MSLjyAU4c8xob9iMHE2MyD1ZjAM8iVKliSUhYrJzUU4/3Q2gx6sAUK4n16Bp5f1nFxL+qrvRv5esnnXr/tQNIuZkuX6dwQxvz9Fb7LQxsSkLDJkjwsYxRH1bcJin6rU7fcmaPc="
+
+cache:
+  directories:
+    - bin
+    - eggs
+    - downloads
+    - src
+    - google-cloud-sdk
