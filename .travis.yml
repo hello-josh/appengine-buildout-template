@@ -1,6 +1,9 @@
 language: python
 python:
   - "2.7"
+
+sudo: false
+
 before_install:
   - openssl aes-256-cbc -K $encrypted_2ae1a256cab0_key -iv $encrypted_2ae1a256cab0_iv
       -in buildconf/deploy/buildout-template-c3f13b4450c1.json.enc
@@ -8,13 +11,11 @@ before_install:
   - mkdir build
 
 install:
-  - sudo apt-get install xsltproc
   - python bootstrap-buildout.py && ./bin/buildout
-  - rm -rf parts/temp
+  - pip install coveralls
 
 script:
-  - ./bin/nosetests --with-xunit --xunit-file=$PWD/nosetests.xml
-  - xsltproc buildconf/nosetests.xslt $PWD/nosetests.xml > build/nosetests.html
+  - coverage run bin/nosetests
 
 after_success:
 - ./travis-ci-deploy.sh
@@ -22,3 +23,11 @@ after_success:
 env:
   global:
     - secure: "Pg4bbTfcHe5cZHZM8sTitS685eCcHmyiOvfr9MSLjyAU4c8xob9iMHE2MyD1ZjAM8iVKliSUhYrJzUU4/3Q2gx6sAUK4n16Bp5f1nFxL+qrvRv5esnnXr/tQNIuZkuX6dwQxvz9Fb7LQxsSkLDJkjwsYxRH1bcJin6rU7fcmaPc="
+    - PYTHONDONTWRITEBYTECODE=true
+
+cache:
+  apt: true
+  directories:
+    - google-cloud-sdk
+    - eggs
+    - downloads
