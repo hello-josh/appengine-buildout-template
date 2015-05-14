@@ -13,7 +13,6 @@ if [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then
     printf '\ny\n\ny\ny\n' | ./google-cloud-sdk/install.sh
     source google-cloud-sdk/path.bash.inc
     gcloud -q components update preview app
-    gcloud -q auth activate-service-account ${GAE_CLIENT_ID} \
-            --key-file buildconf/deploy/buildout-template-c3f13b4450c1.json
+    gcloud -q auth activate-service-account --key-file buildconf/deploy/buildout-template-c3f13b4450c1.json
     gcloud -q --project buildout-template preview app deploy --version ${TRAVIS_BRANCH} --set-default app
 fi
