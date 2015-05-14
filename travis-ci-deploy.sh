@@ -7,16 +7,13 @@ set -e
 }
 
 if [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then
+    export GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/buildconf/deploy/buildout-template-c3f13b4450c1.json
     wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.zip
     unzip -qq google-cloud-sdk.zip
-    google-cloud-sdk/install.sh --usage-reporting false \
-                                --path-update false \
-                                --rc-path=~/.bashrc \
-                                --bash-completion false \
-                                --override-components=app
+    printf '\ny\n\ny\ny\n' | ./google-cloud-sdk/install.sh
     source google-cloud-sdk/path.bash.inc
-    gcloud components update preview app
-    gcloud auth activate-service-account ${GAE_CLIENT_ID} \
+    gcloud -q components update preview app
+    gcloud -q auth activate-service-account ${GAE_CLIENT_ID} \
             --key-file buildconf/deploy/buildout-template-c3f13b4450c1.json
-    gcloud --project buildout-template preview app deploy --version ${TRAVIS_BRANCH} app
+    gcloud -q --project buildout-template preview app deploy --version ${TRAVIS_BRANCH} --set-default app
 fi
