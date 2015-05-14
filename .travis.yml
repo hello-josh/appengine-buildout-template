@@ -18,7 +18,8 @@ script:
   - coverage run bin/nosetests
 
 after_success:
-- ./travis-ci-deploy.sh
+  - coveralls
+  - ./travis-ci-deploy.sh
 
 env:
   global:
