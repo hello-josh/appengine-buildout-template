@@ -12,13 +12,11 @@ before_install:
 
 install:
   - python bootstrap-buildout.py && ./bin/buildout
-  - pip install coveralls
 
 script:
-  - coverage run bin/nosetests
+  - bin/nosetests
 
 after_success:
-  - coveralls
   - ./travis-ci-deploy.sh
 
 env:
