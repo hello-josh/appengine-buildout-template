@@ -14,5 +14,5 @@ if [[ ${TRAVIS_PULL_REQUEST} == "false" ]]; then
     source google-cloud-sdk/path.bash.inc
     gcloud -q components update preview app
     gcloud -q auth activate-service-account --key-file buildconf/deploy/buildout-template-c3f13b4450c1.json
-    gcloud -q --project buildout-template preview app deploy --version ${TRAVIS_BRANCH} app/app.yaml
+    gcloud -q --project buildout-template preview app deploy --set-default --version ${TRAVIS_BRANCH} app/app.yaml
 fi
