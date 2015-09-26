@@ -45,7 +45,7 @@ libraries:
 - name: lxml
   version: latest
 - name: webob
-  version: latests
+  version: latest
 - name: pycrypto
   version: latest
 - name: webapp2
