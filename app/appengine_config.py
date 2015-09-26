@@ -4,3 +4,6 @@ import vendor
 # third-party libraries, and override built-ins with newer
 # versions.
 vendor.add('lib')
+
+appstats_SHELL_OK = True
+
